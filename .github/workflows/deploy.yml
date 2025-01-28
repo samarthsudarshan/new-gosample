@@ -1,0 +1,12 @@
+name: Base Workflow
+on:
+  pull_request:
+
+jobs:
+  use-secret:
+    name: I'm using a secret
+    env:
+      MY_SECRET: ${{ secrets.MY_SECRET }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: command --secret “$MY_SECRET”
