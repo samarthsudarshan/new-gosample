@@ -1,0 +1,43 @@
+pipeline:
+  name: test-gosample-actions
+  identifier: testgosampleactions
+  projectIdentifier: samplayground
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: Samgithub
+        repoName: new-gosample
+        build: <+input>
+  stages:
+    - stage:
+        name: test-actions
+        identifier: testactions
+        description: ""
+        type: SecurityTests
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: SscaCompliance
+                  name: SCS Compliance_1
+                  identifier: SCSCompliance_1
+                  spec:
+                    source:
+                      type: github
+                      spec:
+                        connectorRef: Samgithub
+                        repoName: new-gosample
+                        scan_org: true
