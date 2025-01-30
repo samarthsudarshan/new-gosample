@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_new_gosample_1738204819629-pr-trigger-input-set
+  identifier: Build_new_gosample_1738204819629prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: samplayground
+  pipeline:
+    identifier: Build_new_gosample_1738204819629
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
