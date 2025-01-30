@@ -38,7 +38,7 @@ pipeline:
                       type: docker
                       spec:
                         connector: samdockerhub
-                        image: samarthsud/newgosampl:latest
+                        image: samarthsud/newgosampl
                     attestation:
                       type: cosign
                       spec:
