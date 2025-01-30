@@ -22,14 +22,6 @@ pipeline:
             enabled: true
           buildIntelligence:
             enabled: true
-          infrastructure:
-            type: KubernetesDirect
-            spec:
-              connectorRef: account.kubernetes_connector_for_at
-              namespace: ssca-at
-              automountServiceAccountToken: true
-              nodeSelector: {}
-              os: Linux
           execution:
             steps:
               - step:
@@ -58,3 +50,9 @@ pipeline:
                       limits:
                         memory: 500Mi
                         cpu: "0.5"
+          platform:
+            os: Linux
+            arch: Arm64
+          runtime:
+            type: Cloud
+            spec: {}
