@@ -1,0 +1,60 @@
+pipeline:
+  name: sign-artifact-sbom
+  identifier: signartifactsbom
+  projectIdentifier: samplayground
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: Samgithub
+        repoName: new-gosample
+        build: <+input>
+  stages:
+    - stage:
+        name: sign-gensbom
+        identifier: signgensbom
+        description: ""
+        type: SecurityTests
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+          buildIntelligence:
+            enabled: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.kubernetes_connector_for_at
+              namespace: ssca-at
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: SscaOrchestration
+                  name: SBOM Orchestration_1
+                  identifier: SBOMOrchestration_1
+                  spec:
+                    mode: generation
+                    tool:
+                      type: Syft
+                      spec:
+                        format: spdx-json
+                    source:
+                      type: docker
+                      spec:
+                        connector: samdockerhub
+                        image: samarthsud/newgosampl:latest
+                    attestation:
+                      type: cosign
+                      spec:
+                        privateKey: sam-private-key
+                        password: sam-cosign-password
+                    sbom_drift:
+                      base: last_generated_sbom
+                    resources:
+                      limits:
+                        memory: 500Mi
+                        cpu: "0.5"
