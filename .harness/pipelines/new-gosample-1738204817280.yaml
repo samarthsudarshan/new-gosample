@@ -99,10 +99,12 @@ pipeline:
                         password: sam-cosign-password
                     uploadSignature:
                       upload: true
-          platform:
-            os: Linux
-            arch: Amd64
-          runtime:
-            type: Cloud
-            spec: {}
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.kubernetes_connector_for_at
+              namespace: ssca-at
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
         type: CI
