@@ -39,6 +39,7 @@ pipeline:
                       spec:
                         connector: samdockerhub
                         image: samarthsud/newgosampl
+                        url: https://github.com/samarthsudarshan/new-gosample
                     attestation:
                       type: cosign
                       spec:
