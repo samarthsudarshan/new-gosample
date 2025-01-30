@@ -82,6 +82,23 @@ pipeline:
                       limits:
                         memory: 500Mi
                         cpu: "0.5"
+              - step:
+                  type: SscaArtifactSigning
+                  name: Artifact Signing_1
+                  identifier: ArtifactSigning_1
+                  spec:
+                    source:
+                      type: docker
+                      spec:
+                        connector: samdockerhub
+                        image: samarthsud/newgosampl:latest
+                    signing:
+                      type: cosign
+                      spec:
+                        private_key: sam-private-key
+                        password: sam-cosign-password
+                    uploadSignature:
+                      upload: true
           platform:
             os: Linux
             arch: Amd64
