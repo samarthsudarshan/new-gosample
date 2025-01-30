@@ -33,7 +33,7 @@ pipeline:
                     tool:
                       type: Syft
                       spec:
-                        format: spdx-json
+                        format: cyclonedx-json
                     source:
                       type: docker
                       spec:
