@@ -55,59 +55,16 @@ pipeline:
                   timeout: ""
                   type: Run
               - step:
-                  identifier: dockerbuild
-                  name: docker_build
-                  spec:
-                    connectorRef: samdockerhub
-                    repo: samarthsud/newgosampl
-                    tags:
-                      - latest
-                    caching: true
-                  timeout: ""
-                  type: BuildAndPushDockerRegistry
-              - step:
-                  type: SscaOrchestration
-                  name: SBOM Orchestration_1
-                  identifier: SBOMOrchestration_1
-                  spec:
-                    mode: generation
-                    tool:
-                      type: Syft
-                      spec:
-                        format: cyclonedx-json
-                    source:
-                      type: docker
-                      spec:
-                        connector: samdockerhub
-                        image: samarthsud/newgosampl:latest
-                    attestation:
-                      type: cosign
-                      spec:
-                        privateKey: sam-private-key
-                        password: sam-cosign-password
-                    sbom_drift:
-                      base: last_generated_sbom
-                    resources:
-                      limits:
-                        memory: 500Mi
-                        cpu: "0.5"
-              - step:
-                  type: SscaArtifactSigning
-                  name: Artifact Signing_1
-                  identifier: ArtifactSigning_1
+                  type: SscaCompliance
+                  name: SCS Compliance_1
+                  identifier: SCSCompliance_1
                   spec:
                     source:
-                      type: docker
+                      type: github
                       spec:
-                        connector: samdockerhub
-                        image: samarthsud/newgosampl:latest
-                    signing:
-                      type: cosign
-                      spec:
-                        private_key: sam-private-key
-                        password: sam-cosign-password
-                    uploadSignature:
-                      upload: true
+                        connectorRef: Samgithub
+                        repoName: new-gosample
+                        scan_org: true
           infrastructure:
             type: KubernetesDirect
             spec:
